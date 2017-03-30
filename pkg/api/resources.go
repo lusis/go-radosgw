@@ -4,6 +4,7 @@ type apiError struct {
 	Code string `json:"Code"`
 }
 
+// Entry describes an entry
 type Entry struct {
 	Buckets []struct {
 		Bucket     string `json:"bucket"`
@@ -20,6 +21,7 @@ type Entry struct {
 	Owner string `json:"owner"`
 }
 
+// Summary describes a summary
 type Summary struct {
 	Categories []struct {
 		BytesReceived int    `json:"bytes_received"`
@@ -69,6 +71,7 @@ type User struct {
 	UserID      string         `json:"user_id"`
 }
 
+// Stats represents a stats response
 type Stats struct {
 	Bucket      string `json:"bucket"`
 	BucketQuota struct {
@@ -94,6 +97,7 @@ type Stats struct {
 	Ver string `json:"ver"`
 }
 
+// Bucket represents a bucket
 type Bucket struct {
 	Name  string `json:"name,omitempty"`
 	Stats *Stats `json:"stats,omitempty"`
@@ -107,13 +111,13 @@ type Users []User
 
 // Policy represents the response of policy requests
 type Policy struct {
-	Acl struct {
-		AclGroupMap []struct {
-			Acl   int `json:"acl"`
+	ACL struct {
+		ACLGroupMap []struct {
+			ACL   int `json:"acl"`
 			Group int `json:"group"`
 		} `json:"acl_group_map"`
-		AclUserMap []struct {
-			Acl  int    `json:"acl"`
+		ACLUserMap []struct {
+			ACL  int    `json:"acl"`
 			User string `json:"user"`
 		} `json:"acl_user_map"`
 		GrantMap []struct {

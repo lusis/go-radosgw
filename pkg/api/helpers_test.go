@@ -13,13 +13,13 @@ import (
 )
 
 var (
-	Url    = os.Getenv("RADOSGW_API")
+	URL    = os.Getenv("RADOSGW_API")
 	Access = os.Getenv("RADOSGW_ACCESS") // USER WITH ALL CAPABILITIES
 	Secret = os.Getenv("RADOSGW_SECRET")
 )
 
 func createNewAPI() *API {
-	api, err := New(Url, Access, Secret)
+	api, err := New(URL, Access, Secret)
 	if err != nil {
 		panic(err)
 	}
@@ -34,7 +34,7 @@ func TestAPI(t *testing.T) {
 	})
 
 	Convey("Testing New API with prefix", t, func() {
-		api, err := New(Url, Access, Secret, "adminEndpoint")
+		api, err := New(URL, Access, Secret, "adminEndpoint")
 		if err != nil {
 			panic(err)
 		}
@@ -570,10 +570,10 @@ func TestBucket(t *testing.T) {
 
 		url := ""
 		useSSL := false
-		if strings.HasPrefix(Url, "http://") {
-			url = Url[7:]
-		} else if strings.HasPrefix(Url, "https://") {
-			url = Url[8:]
+		if strings.HasPrefix(URL, "http://") {
+			url = URL[7:]
+		} else if strings.HasPrefix(URL, "https://") {
+			url = URL[8:]
 			useSSL = true
 		}
 
@@ -610,10 +610,10 @@ func TestBucket(t *testing.T) {
 
 		url := ""
 		useSSL := false
-		if strings.HasPrefix(Url, "http://") {
-			url = Url[7:]
-		} else if strings.HasPrefix(Url, "https://") {
-			url = Url[8:]
+		if strings.HasPrefix(URL, "http://") {
+			url = URL[7:]
+		} else if strings.HasPrefix(URL, "https://") {
+			url = URL[8:]
 			useSSL = true
 		}
 
@@ -649,10 +649,10 @@ func TestBucket(t *testing.T) {
 
 		url := ""
 		useSSL := false
-		if strings.HasPrefix(Url, "http://") {
-			url = Url[7:]
-		} else if strings.HasPrefix(Url, "https://") {
-			url = Url[8:]
+		if strings.HasPrefix(URL, "http://") {
+			url = URL[7:]
+		} else if strings.HasPrefix(URL, "https://") {
+			url = URL[8:]
 			useSSL = true
 		}
 
@@ -676,7 +676,7 @@ func TestBucket(t *testing.T) {
 		err = minioClient.MakeBucket("unittestbucket", "")
 		So(err, ShouldBeNil)
 
-		api.RemoveBucket(BucketConfig{
+		_ = api.RemoveBucket(BucketConfig{
 			Bucket:       "unittestbucket",
 			PurgeObjects: true,
 		})
@@ -717,10 +717,10 @@ func TestBucket(t *testing.T) {
 
 		url := ""
 		useSSL := false
-		if strings.HasPrefix(Url, "http://") {
-			url = Url[7:]
-		} else if strings.HasPrefix(Url, "https://") {
-			url = Url[8:]
+		if strings.HasPrefix(URL, "http://") {
+			url = URL[7:]
+		} else if strings.HasPrefix(URL, "https://") {
+			url = URL[8:]
 			useSSL = true
 		}
 		user, err := api.CreateUser(UserConfig{
@@ -771,10 +771,10 @@ func TestBucket(t *testing.T) {
 
 		url := ""
 		useSSL := false
-		if strings.HasPrefix(Url, "http://") {
-			url = Url[7:]
-		} else if strings.HasPrefix(Url, "https://") {
-			url = Url[8:]
+		if strings.HasPrefix(URL, "http://") {
+			url = URL[7:]
+		} else if strings.HasPrefix(URL, "https://") {
+			url = URL[8:]
 			useSSL = true
 		}
 		user, err := api.CreateUser(UserConfig{
@@ -808,10 +808,10 @@ func TestBucket(t *testing.T) {
 
 		url := ""
 		useSSL := false
-		if strings.HasPrefix(Url, "http://") {
-			url = Url[7:]
-		} else if strings.HasPrefix(Url, "https://") {
-			url = Url[8:]
+		if strings.HasPrefix(URL, "http://") {
+			url = URL[7:]
+		} else if strings.HasPrefix(URL, "https://") {
+			url = URL[8:]
 			useSSL = true
 		}
 		user, err := api.CreateUser(UserConfig{
@@ -865,10 +865,10 @@ func TestBucket(t *testing.T) {
 
 		url := ""
 		useSSL := false
-		if strings.HasPrefix(Url, "http://") {
-			url = Url[7:]
-		} else if strings.HasPrefix(Url, "https://") {
-			url = Url[8:]
+		if strings.HasPrefix(URL, "http://") {
+			url = URL[7:]
+		} else if strings.HasPrefix(URL, "https://") {
+			url = URL[8:]
 			useSSL = true
 		}
 		user, err := api.CreateUser(UserConfig{
@@ -891,9 +891,9 @@ func TestBucket(t *testing.T) {
 		err = minioClient.MakeBucket("unittestbucket", "")
 		So(err, ShouldBeNil)
 
-		policy, err := api.GetBucketPolicy(BucketConfig{})
-		So(err, ShouldNotBeNil)
-		policy, err = api.GetBucketPolicy(BucketConfig{
+		_, pErr := api.GetBucketPolicy(BucketConfig{})
+		So(pErr, ShouldNotBeNil)
+		policy, err := api.GetBucketPolicy(BucketConfig{
 			Bucket: "unittestbucket",
 		})
 		So(err, ShouldBeNil)
@@ -905,10 +905,10 @@ func TestBucket(t *testing.T) {
 
 		url := ""
 		useSSL := false
-		if strings.HasPrefix(Url, "http://") {
-			url = Url[7:]
-		} else if strings.HasPrefix(Url, "https://") {
-			url = Url[8:]
+		if strings.HasPrefix(URL, "http://") {
+			url = URL[7:]
+		} else if strings.HasPrefix(URL, "https://") {
+			url = URL[8:]
 			useSSL = true
 		}
 		user, err := api.CreateUser(UserConfig{
@@ -934,15 +934,15 @@ func TestBucket(t *testing.T) {
 		_, err = minioClient.PutObject("unittestbucket", "test.txt", b, "")
 		So(err, ShouldBeNil)
 
-		policy, err := api.GetObjectPolicy(BucketConfig{})
-		So(err, ShouldNotBeNil)
+		_, pErr := api.GetObjectPolicy(BucketConfig{})
+		So(pErr, ShouldNotBeNil)
 
-		policy, err = api.GetObjectPolicy(BucketConfig{
+		_, pErr = api.GetObjectPolicy(BucketConfig{
 			Bucket: "unittestbucket",
 		})
-		So(err, ShouldNotBeNil)
+		So(pErr, ShouldNotBeNil)
 
-		policy, err = api.GetObjectPolicy(BucketConfig{
+		policy, err := api.GetObjectPolicy(BucketConfig{
 			Bucket: "unittestbucket",
 			Object: "test.txt",
 		})

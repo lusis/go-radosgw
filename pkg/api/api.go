@@ -51,7 +51,7 @@ func (api *API) makeRequest(verb, url string) (body []byte, statusCode int, err 
 		return
 	}
 	if resp.Body != nil {
-		defer resp.Body.Close()
+		defer func() { _ = resp.Body.Close() }()
 	}
 	statusCode = resp.StatusCode
 	body, err = ioutil.ReadAll(resp.Body)

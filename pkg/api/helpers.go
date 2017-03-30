@@ -630,28 +630,31 @@ func (api *API) CheckBucket(conf BucketConfig) (string, error) {
 //@UID
 //
 func (api *API) LinkBucket(conf BucketConfig) error {
-	var (
-		values = url.Values{}
-		errs   []error
-	)
-
 	// FIXME doesn't work
 	return fmt.Errorf("LinkBucket not implemented yet")
-	if conf.Bucket == "" {
-		return errors.New("Bucket field is required")
-	}
-	if conf.UID == "" {
-		return errors.New("UID field is required")
-	}
-	values, errs = encurl.Translate(conf)
-	if len(errs) > 0 {
-		return errs[0]
-	}
-	values.Add("format", "json")
-	body, _, err := api.call("PUT", "/bucket", values, true)
-	// return string(body), err
-	_ = body
-	return err
+	/*
+		var (
+			values = url.Values{}
+			errs   []error
+		)
+
+
+		if conf.Bucket == "" {
+			return errors.New("Bucket field is required")
+		}
+		if conf.UID == "" {
+			return errors.New("UID field is required")
+		}
+		values, errs = encurl.Translate(conf)
+		if len(errs) > 0 {
+			return errs[0]
+		}
+		values.Add("format", "json")
+		body, _, err := api.call("PUT", "/bucket", values, true)
+		// return string(body), err
+		_ = body
+		return err
+	*/
 }
 
 // RemoveObject removes an existing object. NOTE: Does not require owner to be non-suspended.
@@ -704,6 +707,9 @@ func (api *API) GetBucketPolicy(conf BucketConfig) (*Policy, error) {
 	}
 	values.Add("format", "json")
 	body, _, err := api.call("GET", "/bucket", values, true, "policy")
+	if err != nil {
+		return ret, err
+	}
 	if err = json.Unmarshal(body, &ret); err != nil {
 		return nil, err
 	}
@@ -737,6 +743,9 @@ func (api *API) GetObjectPolicy(conf BucketConfig) (*Policy, error) {
 	}
 	values.Add("format", "json")
 	body, _, err := api.call("GET", "/bucket", values, true, "policy")
+	if err != nil {
+		return ret, err
+	}
 	if err = json.Unmarshal(body, &ret); err != nil {
 		return nil, err
 	}
@@ -777,6 +786,9 @@ func (api *API) GetQuotas(conf QuotaConfig) (*Quotas, error) {
 	}
 	values.Add("format", "json")
 	body, _, err := api.call("GET", "/user", values, true, "quota")
+	if err != nil {
+		return ret, err
+	}
 	if err = json.Unmarshal(body, &ret); err != nil {
 		return nil, err
 	}
@@ -845,6 +857,9 @@ func (api *API) AddCapability(conf CapConfig) ([]Capability, error) {
 	}
 	values.Add("format", "json")
 	body, _, err := api.call("PUT", "/user", values, true, "caps")
+	if err != nil {
+		return ret, err
+	}
 	if err = json.Unmarshal(body, &ret); err != nil {
 		return nil, err
 	}
@@ -878,6 +893,9 @@ func (api *API) DelCapability(conf CapConfig) ([]Capability, error) {
 	}
 	values.Add("format", "json")
 	body, _, err := api.call("DELETE", "/user", values, true, "caps")
+	if err != nil {
+		return ret, err
+	}
 	if err = json.Unmarshal(body, &ret); err != nil {
 		return nil, err
 	}
