@@ -103,6 +103,34 @@ func (api *API) GetUser(uid ...string) (*User, error) {
 	return ret, nil
 }
 
+// GetUsers gets all users information via the metadata endpoint
+//
+// !! caps: users=read !!
+func (api *API) GetUsers() (*Users, error) {
+	collection := []string{}
+	ret := Users{}
+	values := url.Values{}
+
+	values.Add("Format", "json")
+	body, _, err := api.call("GET", "/metadata/user", values, true)
+	if err != nil {
+		return nil, err
+	}
+
+	if err = json.Unmarshal(body, &collection); err != nil {
+		return nil, err
+	}
+	for _, u := range collection {
+		user, err := api.GetUser(u)
+		if err != nil {
+			continue
+		} else {
+			ret = append(ret, *user)
+		}
+	}
+	return &ret, nil
+}
+
 // UserConfig user request
 type UserConfig struct {
 	UID         string `url:"uid,ifStringIsNotEmpty"`          // The user ID to be created

@@ -102,6 +102,9 @@ type Bucket struct {
 // Buckets represents the response of bucket requests
 type Buckets []Bucket
 
+// Users represents a group of User
+type Users []User
+
 // Policy represents the response of policy requests
 type Policy struct {
 	Acl struct {
