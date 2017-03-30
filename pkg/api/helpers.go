@@ -105,7 +105,7 @@ func (api *API) GetUser(uid ...string) (*User, error) {
 
 // GetUsers gets all users information via the metadata endpoint
 //
-// !! caps: users=read !!
+// !! caps: metadata=read !!
 func (api *API) GetUsers() (*Users, error) {
 	collection := []string{}
 	ret := Users{}

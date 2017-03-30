@@ -45,12 +45,6 @@ type Usage struct {
 	Summary []Summary `json:"summary"`
 }
 
-// SubUsers represents the response of subuser requests
-type SubUsers []struct {
-	ID          string `json:"id"`
-	Permissions string `json:"permissions"`
-}
-
 // KeysDefinition represents the response of key requests
 type KeysDefinition []struct {
 	AccessKey string `json:"access_key,omitempty"`
@@ -103,11 +97,20 @@ type Bucket struct {
 	Stats *Stats `json:"stats,omitempty"`
 }
 
+// SubUser represents a SubUser
+type SubUser struct {
+	ID          string `json:"id"`
+	Permissions string `json:"permissions"`
+}
+
 // Buckets represents the response of bucket requests
 type Buckets []Bucket
 
 // Users represents a group of User
 type Users []User
+
+// SubUsers represents the response of subuser requests
+type SubUsers []SubUser
 
 // Policy represents the response of policy requests
 type Policy struct {
