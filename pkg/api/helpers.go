@@ -291,7 +291,7 @@ func (api *API) CreateSubUser(conf SubUserConfig) (*SubUsers, error) {
 	}
 
 	var (
-		ret    = &SubUsers{}
+		ret    = SubUsers{}
 		values = url.Values{}
 		errs   []error
 	)
@@ -308,7 +308,7 @@ func (api *API) CreateSubUser(conf SubUserConfig) (*SubUsers, error) {
 	if err = json.Unmarshal(body, &ret); err != nil {
 		return nil, err
 	}
-	return ret, nil
+	return &ret, nil
 }
 
 // UpdateSubUser modifies an existing subuser
@@ -900,4 +900,10 @@ func (api *API) DelCapability(conf CapConfig) ([]Capability, error) {
 		return nil, err
 	}
 	return ret, err
+}
+
+// APIRequest allows you to make a direct api request authenticated as the current user
+//
+func (api *API) APIRequest(verb, route string, args url.Values, usePrefix bool, sub ...string) ([]byte, int, error) {
+	return api.call(verb, route, args, usePrefix, sub...)
 }
